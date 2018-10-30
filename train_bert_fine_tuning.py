@@ -134,6 +134,7 @@ def main(_):
                 # loss_valid,f1_macro_valid2,f1_micro_valid2=do_eval(sess,model,valid,num_classes,label2index)
                 # f1_score_valid2 = ((f1_macro_valid2 + f1_micro_valid2) / 2.0) #* 100.0
                 # print("Valid.Epoch %d ValidLoss:%.3f\tF1 score:%.3f\tMacro_f1:%.3f\tMicro_f1:%.3f\t"% (epoch,loss_valid,f1_score_valid2,f1_macro_valid2,f1_micro_valid2))
+                print("epoch %d", epoch)
                 do_eval_acc(sess,model, valid, num_classes, label2index)
                 #save model to checkpoint
                 # if f1_score_valid2 > score_best:
@@ -150,7 +151,7 @@ def main(_):
         #loss_test, f1_macro_test, f1_micro_test=do_eval(sess, model, test,num_classes, label2index)
         #f1_score_test=((f1_macro_test + f1_micro_test) / 2.0) * 100.0
         #print("Test.Epoch %d TestLoss:%.3f\tF1_score:%.3f\tMacro_f1:%.3f\tMicro_f1:%.3f\t" % (epoch, loss_test, f1_score_test,f1_macro_test, f1_micro_test))
-        print("test epoch")
+        print("test data ")
         do_eval_acc(sess, model, test, num_classes, label2index)
         print("training completed...")
 
