@@ -75,10 +75,10 @@ class BertCNNModel:
         else: # fine tuning
             self.logits=self.inference()
             self.loss_val = self.loss() # fine tuning
-            self.accuracy = tf.reduce_mean(
-            tf.cast(
-                tf.equal(tf.cast(tf.argmax(self.logits, axis=1), tf.int32), tf.cast(tf.argmax(self.input_y, axis=1)),
-                         tf.float32)))
+            self.accuracy = tf.reduce_mean(tf.cast(
+                tf.equal(tf.cast(tf.argmax(self.logits, axis=1), tf.int32),
+                         tf.cast(tf.argmax(self.input_y, axis=1), tf.int32)
+                         ), tf.float32))
 
         if not self.is_training:
             return
