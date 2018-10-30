@@ -60,7 +60,9 @@ tf.app.flags.DEFINE_integer("d_v", 8, "dimension of v") # 64-->16
 def main(_):
     # 1.load vocabulary of token from cache file save from pre-trained stage; load label dict from training file; print some message.
     vocab_word2index, _= create_or_load_vocabulary(FLAGS.data_path,FLAGS.training_data_file,FLAGS.vocab_size,test_mode=FLAGS.test_mode,tokenize_style=FLAGS.tokenize_style)
-    label2index=get_lable2index(FLAGS.data_path,FLAGS.training_data_file, tokenize_style=FLAGS.tokenize_style)
+    # label2index=get_lable2index(FLAGS.data_path,FLAGS.training_data_file, tokenize_style=FLAGS.tokenize_style)
+    label2index = {'0': 0, '1': 1, '2': 2, '3': 3}
+
     vocab_size = len(vocab_word2index);print("cnn_model.vocab_size:",vocab_size);num_classes=len(label2index);print("num_classes:",num_classes)
     # load training data.
     train,valid, test= load_data_multilabel(FLAGS.data_path,FLAGS.training_data_file,FLAGS.valid_data_file,FLAGS.test_data_file,vocab_word2index,label2index,FLAGS.sequence_length,
@@ -111,17 +113,17 @@ def main(_):
                 loss_total,counter=loss_total+current_loss,counter+1
                 if counter %30==0:
                     print("Learning rate:%.7f\tLoss:%.3f\tCurrent_loss:%.3f\tL2_loss%.3f\t"%(lr,float(loss_total)/float(counter),current_loss,l2_loss))
-                if start!=0 and start%(1000*FLAGS.batch_size)==0:
-                    loss_valid, f1_macro_valid, f1_micro_valid= do_eval(sess, model, valid,num_classes,label2index)
-                    f1_score_valid=((f1_macro_valid+f1_micro_valid)/2.0) #*100.0
-                    print("Valid.Epoch %d ValidLoss:%.3f\tF1_score_valid:%.3f\tMacro_f1:%.3f\tMicro_f1:%.3f\t" % (epoch, loss_valid, f1_score_valid, f1_macro_valid, f1_micro_valid))
+                #if start!=0 and start%(1000*FLAGS.batch_size)==0:
+                    # loss_valid, f1_macro_valid, f1_micro_valid= do_eval(sess, model, valid,num_classes,label2index)
+                    # f1_score_valid=((f1_macro_valid+f1_micro_valid)/2.0) #*100.0
+                    # print("Valid.Epoch %d ValidLoss:%.3f\tF1_score_valid:%.3f\tMacro_f1:%.3f\tMicro_f1:%.3f\t" % (epoch, loss_valid, f1_score_valid, f1_macro_valid, f1_micro_valid))
 
                     # save model to checkpoint
-                    if f1_score_valid>score_best:
-                        save_path = FLAGS.ckpt_dir_save + "model.ckpt"
-                        print("going to save check point.")
-                        saver.save(sess, save_path, global_step=epoch)
-                        score_best=f1_score_valid
+                    # if f1_score_valid>score_best:
+                    #     save_path = FLAGS.ckpt_dir_save + "model.ckpt"
+                    #     print("going to save check point.")
+                    #     saver.save(sess, save_path, global_step=epoch)
+                    #     score_best=f1_score_valid
             #epoch increment
             print("going to increment epoch counter....")
             sess.run(model.epoch_increment)
@@ -129,27 +131,66 @@ def main(_):
             # 4.validation
             print(epoch,FLAGS.validate_every,(epoch % FLAGS.validate_every==0))
             if epoch % FLAGS.validate_every==0:
-                loss_valid,f1_macro_valid2,f1_micro_valid2=do_eval(sess,model,valid,num_classes,label2index)
-                f1_score_valid2 = ((f1_macro_valid2 + f1_micro_valid2) / 2.0) #* 100.0
-                print("Valid.Epoch %d ValidLoss:%.3f\tF1 score:%.3f\tMacro_f1:%.3f\tMicro_f1:%.3f\t"% (epoch,loss_valid,f1_score_valid2,f1_macro_valid2,f1_micro_valid2))
+                # loss_valid,f1_macro_valid2,f1_micro_valid2=do_eval(sess,model,valid,num_classes,label2index)
+                # f1_score_valid2 = ((f1_macro_valid2 + f1_micro_valid2) / 2.0) #* 100.0
+                # print("Valid.Epoch %d ValidLoss:%.3f\tF1 score:%.3f\tMacro_f1:%.3f\tMicro_f1:%.3f\t"% (epoch,loss_valid,f1_score_valid2,f1_macro_valid2,f1_micro_valid2))
+                do_eval_acc(sess,model, valid, num_classes, label2index)
                 #save model to checkpoint
-                if f1_score_valid2 > score_best:
-                    save_path=FLAGS.ckpt_dir_save+"model.ckpt"
-                    print("going to save check point.")
-                    saver.save(sess,save_path,global_step=epoch)
-                    score_best = f1_score_valid2
+                # if f1_score_valid2 > score_best:
+                #     save_path=FLAGS.ckpt_dir_save+"model.ckpt"
+                #     print("going to save check point.")
+                #     saver.save(sess,save_path,global_step=epoch)
+                #     score_best = f1_score_valid2
             if (epoch == 2 or epoch == 4 or epoch == 6 or epoch == 9 or epoch == 13):
                 for i in range(1):
                     print(i, "Going to decay learning rate by half.")
                     sess.run(model.learning_rate_decay_half_op)
 
         # 5.report on test set
-        loss_test, f1_macro_test, f1_micro_test=do_eval(sess, model, test,num_classes, label2index)
-        f1_score_test=((f1_macro_test + f1_micro_test) / 2.0) * 100.0
-        print("Test.Epoch %d TestLoss:%.3f\tF1_score:%.3f\tMacro_f1:%.3f\tMicro_f1:%.3f\t" % (epoch, loss_test, f1_score_test,f1_macro_test, f1_micro_test))
+        #loss_test, f1_macro_test, f1_micro_test=do_eval(sess, model, test,num_classes, label2index)
+        #f1_score_test=((f1_macro_test + f1_micro_test) / 2.0) * 100.0
+        #print("Test.Epoch %d TestLoss:%.3f\tF1_score:%.3f\tMacro_f1:%.3f\tMicro_f1:%.3f\t" % (epoch, loss_test, f1_score_test,f1_macro_test, f1_micro_test))
+        print("test epoch")
+        do_eval_acc(sess, model, test, num_classes, label2index)
         print("training completed...")
 
-          #sess,model,valid,iteration,num_classes,label2index
+
+#sess,model,valid,iteration,num_classes,label2index
+def do_eval_acc(sess,model,valid,num_classes,label2index):
+    """
+    do evaluation using validation set, and report loss, and f1 score.
+    :param sess:
+    :param model:
+    :param valid:
+    :param num_classes:
+    :param label2index:
+    :return:
+    """
+    number_examples=valid[0].shape[0]
+    valid=valid[0:64*15] # todo
+    valid_x,valid_y=valid
+    print("number_examples:",number_examples)
+    eval_loss,eval_counter=0.0,0
+    batch_size=FLAGS.batch_size
+    label_dict=init_label_dict(num_classes)
+    total_loss, total_accuracy, total_count = 0.0, 0.0, 0
+    for start,end in zip(range(0,number_examples,batch_size),range(batch_size,number_examples,batch_size)):
+        feed_dict = {model.input_x: valid_x[start:end],model.input_y:valid_y[start:end],model.dropout_keep_prob: 1.0}
+        loss, accuracy = sess.run([model.loss_val, model.accuracy],feed_dict)
+        total_loss += loss * batch_size
+        total_accuracy += accuracy * batch_size
+        total_count += batch_size
+        eval_counter=eval_counter+1
+
+    print("\n==========\n")
+    print('eval data size: %d' % total_count)
+    print('loss: %.5f' % (total_loss / total_count))
+    print('accuracy: %.5f' % (total_accuracy / total_count))
+    print("\n==========\n")
+
+
+
+#sess,model,valid,iteration,num_classes,label2index
 def do_eval(sess,model,valid,num_classes,label2index):
     """
     do evaluation using validation set, and report loss, and f1 score.
