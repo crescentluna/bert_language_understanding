@@ -35,14 +35,14 @@ tf.app.flags.DEFINE_integer("d_k", 8, "dimension of k") # 64
 tf.app.flags.DEFINE_integer("d_v", 8, "dimension of v") # 64
 
 tf.app.flags.DEFINE_string("tokenize_style","word","checkpoint location for the model")
-tf.app.flags.DEFINE_integer("max_allow_sentence_length",15,"max length of allowed sentence for masked language model")
+tf.app.flags.DEFINE_integer("max_allow_sentence_length",10,"max length of allowed sentence for masked language model")
 tf.app.flags.DEFINE_float("learning_rate",0.0001,"learning rate") #0.001
 tf.app.flags.DEFINE_integer("batch_size", 64, "Batch size for training/evaluating.")
 tf.app.flags.DEFINE_integer("decay_steps", 1000, "how many steps before decay learning rate.")
 tf.app.flags.DEFINE_float("decay_rate", 1.0, "Rate of decay for learning rate.")
 tf.app.flags.DEFINE_float("dropout_keep_prob", 0.9, "percentage to keep when using dropout.")
 tf.app.flags.DEFINE_integer("sequence_length",100,"max sentence length")#400
-tf.app.flags.DEFINE_integer("sequence_length_lm",15,"max sentence length for masked language model")
+tf.app.flags.DEFINE_integer("sequence_length_lm",10,"max sentence length for masked language model")
 tf.app.flags.DEFINE_boolean("is_training",True,"is training.true:tranining,false:testing/inference")
 tf.app.flags.DEFINE_boolean("is_fine_tuning",False,"is_finetuning.ture:this is fine-tuning stage")
 tf.app.flags.DEFINE_integer("num_epochs",30,"number of epochs to run.")
