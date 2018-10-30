@@ -172,7 +172,7 @@ class BertCNNModel:
         # let `x = logits`, `z = labels`.  The logistic loss is:z * -log(sigmoid(x)) + (1 - z) * -log(1 - sigmoid(x))
         y_mask_lm_onehot=tf.one_hot(self.y_mask_lm,self.vocab_size)
         print("#loss_lm.y_mask_lm_onehot:",y_mask_lm_onehot,";logits_lm:",self.logits_lm)
-        losses= tf.nn.softmax_cross_entropy_with_logits_v2(labels=y_mask_lm_onehot,logits=self.logits_lm)  #[batch_size,num_classes]
+        losses= tf.nn.softmax_cross_entropy_with_logits(labels=y_mask_lm_onehot,logits=self.logits_lm)  #[batch_size,num_classes]
         print("#loss_lm.losses:",losses)
         lm_loss = tf.reduce_mean(losses)
         self.l2_loss_lm = tf.add_n([tf.nn.l2_loss(v) for v in tf.trainable_variables() if 'bias' not in v.name]) * l2_lambda

@@ -23,9 +23,9 @@ from evaluation_matrix import *
 FLAGS=tf.app.flags.FLAGS
 
 tf.app.flags.DEFINE_string("data_path","./data/","path of traning data.")
-tf.app.flags.DEFINE_string("training_data_file","./data/bert_train2.txt","path of traning data.") #./data/cail2018_bi.json
-tf.app.flags.DEFINE_string("valid_data_file","./data/bert_valid2.txt","path of validation data.")
-tf.app.flags.DEFINE_string("test_data_file","./data/bert_test2.txt","path of validation data.")
+tf.app.flags.DEFINE_string("training_data_file","./data/bert_train.txt","path of traning data.") #./data/cail2018_bi.json
+tf.app.flags.DEFINE_string("valid_data_file","./data/bert_valid.txt","path of validation data.")
+tf.app.flags.DEFINE_string("test_data_file","./data/bert_test.txt","path of validation data.")
 tf.app.flags.DEFINE_string("ckpt_dir","./checkpoint_lm/","checkpoint location for the model for restore from pre-train") #save to here, so make it easy to upload for test
 tf.app.flags.DEFINE_string("ckpt_dir_save","./checkpoint_lm_save/","checkpoint location for the model for save fine-tuning") #save to here, so make it easy to upload for test
 

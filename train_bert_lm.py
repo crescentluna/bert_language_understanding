@@ -25,7 +25,7 @@ FLAGS=tf.app.flags.FLAGS
 
 tf.app.flags.DEFINE_boolean("test_mode",False,"whether it is test mode. if it is test mode, only small percentage of data will be used")
 tf.app.flags.DEFINE_string("data_path","./data/","path of traning data.")
-tf.app.flags.DEFINE_string("mask_lm_source_file","./data/bert_train2.txt","path of traning data.")
+tf.app.flags.DEFINE_string("mask_lm_source_file","./data/bert_train.txt","path of traning data.")
 tf.app.flags.DEFINE_string("ckpt_dir","./checkpoint_lm/","checkpoint location for the model") #save to here, so make it easy to upload for test
 tf.app.flags.DEFINE_integer("vocab_size",60000,"maximum vocab size.")
 tf.app.flags.DEFINE_integer("d_model", 64, "dimension of model") # 512-->128
