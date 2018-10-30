@@ -75,11 +75,8 @@ def mask_language_model(source_file,target_file,index2word,max_allow_sentence_le
             else: # ignore short sentence currently, temporary
                 continue
             # the training data generator chooses 15% of tokens at random,e.g., in the sentence my dog is hairy it chooses hairy.
-            if len(list_indices) != 1:
-                index=random.sample(list_indices, 1)
-                index=index[0]
-            else:
-                index = 0
+            index=random.sample(list_indices, 1)
+            index=index[0]
             mask_word=string_list[index]
             ########### 3.THREE DIFFERENT TYPES when generate sentence.#################################################
             random_number=random.random()

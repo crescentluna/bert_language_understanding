@@ -35,14 +35,14 @@ tf.app.flags.DEFINE_integer("d_k", 8, "dimension of k") # 64
 tf.app.flags.DEFINE_integer("d_v", 8, "dimension of v") # 64
 
 tf.app.flags.DEFINE_string("tokenize_style","word","checkpoint location for the model")
-tf.app.flags.DEFINE_integer("max_allow_sentence_length",0,"max length of allowed sentence for masked language model")
+tf.app.flags.DEFINE_integer("max_allow_sentence_length",15,"max length of allowed sentence for masked language model")
 tf.app.flags.DEFINE_float("learning_rate",0.0001,"learning rate") #0.001
 tf.app.flags.DEFINE_integer("batch_size", 64, "Batch size for training/evaluating.")
 tf.app.flags.DEFINE_integer("decay_steps", 1000, "how many steps before decay learning rate.")
 tf.app.flags.DEFINE_float("decay_rate", 1.0, "Rate of decay for learning rate.")
 tf.app.flags.DEFINE_float("dropout_keep_prob", 0.9, "percentage to keep when using dropout.")
 tf.app.flags.DEFINE_integer("sequence_length",100,"max sentence length")#400
-tf.app.flags.DEFINE_integer("sequence_length_lm",10,"max sentence length for masked language model")
+tf.app.flags.DEFINE_integer("sequence_length_lm",15,"max sentence length for masked language model")
 tf.app.flags.DEFINE_boolean("is_training",True,"is training.true:tranining,false:testing/inference")
 tf.app.flags.DEFINE_boolean("is_fine_tuning",False,"is_finetuning.ture:this is fine-tuning stage")
 tf.app.flags.DEFINE_integer("num_epochs",30,"number of epochs to run.")
@@ -104,7 +104,7 @@ def main(_):
                 loss_total_lm,counter=loss_total_lm+current_loss_lm,counter+1
                 if counter %30==0:
                     print("%d\t%d\tLearning rate:%.5f\tLoss_lm:%.3f\tCurrent_loss_lm:%.3f\tL2_loss:%.3f\t"%(epoch,counter,lr,float(loss_total_lm)/float(counter),current_loss_lm,l2_loss))
-                if start!=0 and start%(1000*FLAGS.batch_size)==0: # epoch!=0
+                if start!=0 and (epoch + 1) %2==0: # epoch!=0
                     loss_valid, acc_valid= do_eval(sess, model, valid,batch_size)
                     print("%d\tValid.Epoch %d ValidLoss:%.3f\tAcc_valid:%.3f\t" % (counter,epoch, loss_valid, acc_valid*100))
                     # save model to checkpoint
