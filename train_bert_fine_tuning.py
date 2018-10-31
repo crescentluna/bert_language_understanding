@@ -23,7 +23,7 @@ from evaluation_matrix import *
 FLAGS=tf.app.flags.FLAGS
 
 tf.app.flags.DEFINE_string("data_path","./data/","path of traning data.")
-tf.app.flags.DEFINE_string("training_data_file","./data/yes_no_train.txt","path of traning data.") #./data/cail2018_bi.json
+tf.app.flags.DEFINE_string("training_data_file","./data/yes_no_train_limit.txt","path of traning data.") #./data/cail2018_bi.json
 tf.app.flags.DEFINE_string("valid_data_file","./data/yes_no_valid.txt","path of validation data.")
 tf.app.flags.DEFINE_string("test_data_file","./data/yes_no_test.txt","path of validation data.")
 tf.app.flags.DEFINE_string("ckpt_dir","./checkpoint_lm/","checkpoint location for the model for restore from pre-train") #save to here, so make it easy to upload for test
@@ -81,7 +81,7 @@ def main(_):
         #Initialize Save
         saver=tf.train.Saver()
         #if os.path.exists(FLAGS.ckpt_dir+"checkpoint"):
-        if False:
+        if True:
             print("Restoring Variables from Checkpoint.")
             sess.run(tf.global_variables_initializer())
             for i in range(6): #decay learning rate if necessary.
