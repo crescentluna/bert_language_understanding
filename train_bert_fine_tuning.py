@@ -81,7 +81,7 @@ def main(_):
         #Initialize Save
         saver=tf.train.Saver()
         #if os.path.exists(FLAGS.ckpt_dir+"checkpoint"):
-        if True:
+        if False:
             print("Restoring Variables from Checkpoint.")
             sess.run(tf.global_variables_initializer())
             for i in range(6): #decay learning rate if necessary.
