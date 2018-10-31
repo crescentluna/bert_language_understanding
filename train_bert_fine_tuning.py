@@ -43,7 +43,7 @@ tf.app.flags.DEFINE_integer("sequence_length_lm",10,"max sentence length for mas
 tf.app.flags.DEFINE_boolean("is_training",True,"is training.true:tranining,false:testing/inference")
 tf.app.flags.DEFINE_boolean("is_fine_tuning",True,"is_finetuning.ture:this is fine-tuning stage")
 
-tf.app.flags.DEFINE_integer("num_epochs",35,"number of epochs to run.")
+tf.app.flags.DEFINE_integer("num_epochs",3,"number of epochs to run.")
 tf.app.flags.DEFINE_integer("process_num",35,"number of cpu used")
 
 tf.app.flags.DEFINE_integer("validate_every", 1, "Validate every validate_every epochs.") #
