@@ -51,7 +51,7 @@ tf.app.flags.DEFINE_boolean("use_pretrained_embedding",True,"whether to use embe
 tf.app.flags.DEFINE_string("word2vec_model_path","./data/query_corpus.vector","word2vec's vocabulary and vectors") # data/sgns.target.word-word.dynwin5.thr10.neg5.dim300.iter5--->data/news_12g_baidubaike_20g_novel_90g_embedding_64.bin--->sgns.merge.char
 tf.app.flags.DEFINE_boolean("test_mode",False,"whether it is test mode. if it is test mode, only small percentage of data will be used. test mode for test purpose.")
 
-tf.app.flags.DEFINE_integer("d_model", 64, "dimension of model") # 512-->128
+tf.app.flags.DEFINE_integer("d_model", 100, "dimension of model") # 512-->128
 tf.app.flags.DEFINE_integer("num_layer", 6, "number of layer")
 tf.app.flags.DEFINE_integer("num_header", 8, "number of header")
 tf.app.flags.DEFINE_integer("d_k", 8, "dimension of k") # 64-->16
